@@ -19,7 +19,7 @@ function displayImage(ramen) {
     document.querySelector('#ramen-menu').appendChild(img)
 }
 
-document.querySelector('form').addEventListener('submit', (e) => {
+document.querySelector('#new-ramen').addEventListener('submit', (e) => {
     e.preventDefault()
     formatRamen = {
         name: e.target['new-name'].value,
@@ -28,5 +28,13 @@ document.querySelector('form').addEventListener('submit', (e) => {
         rating: e.target['new-rating'].value,
         comment: e.target['new-comment'].value
       }
-    displayImage(formatRamen)
+      fetch("http://localhost:3000/ramens", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formatRamen)
+      })
+      .then(res => res.json())
+      .then((displayImage))
 })
